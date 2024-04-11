@@ -311,6 +311,21 @@ namespace ifc
             return *trait_friendship_of_class_;
         }
 
+        std::unordered_map<DeclIndex, Sequence> const& trait_template_specializations()
+        {
+            if (!trait_template_specializations_) {
+                trait_template_specializations_.emplace();
+
+                if (auto specializations = try_get_partition<AssociatedTrait<Sequence>, Index>("trait.specialization"))
+                {
+                    for (auto specialization : *specializations) {
+                        (*trait_template_specializations_)[specialization.decl] = specialization.trait;
+                    }
+                }
+            }
+            return *trait_template_specializations_;
+        }
+
     private:
         void fill_decl_attributes(std::string_view partition)
         {
@@ -326,6 +341,7 @@ namespace ifc
         std::optional<std::unordered_map<DeclIndex, TextOffset>> trait_deprecation_texts_;
         std::optional<std::unordered_map<DeclIndex, std::vector<AttrIndex>>> trait_declaration_attributes_;
         std::optional<std::unordered_map<DeclIndex, Sequence>> trait_friendship_of_class_;
+        std::optional<std::unordered_map<DeclIndex, Sequence>> trait_template_specializations_;
 
         struct UntypedPartition
         {
@@ -965,6 +981,11 @@ namespace ifc
     Sequence File::trait_friendship_of_class(DeclIndex declaration) const
     {
         return get_value<Sequence>(declaration, impl_->trait_friendship_of_class());
+    }
+
+    Sequence File::trait_template_specializations(DeclIndex declaration) const
+    {
+        return get_value<Sequence>(declaration, impl_->trait_template_specializations());
     }
 
     File::File(BlobView data)

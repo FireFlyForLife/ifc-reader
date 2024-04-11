@@ -172,9 +172,10 @@ namespace ifc
 
     public:
         // Traits
-        TextOffset                  trait_deprecation_texts     (DeclIndex) const;
-        std::span<AttrIndex const>  trait_declaration_attributes(DeclIndex) const;
-        Sequence                    trait_friendship_of_class   (DeclIndex) const; // A sequence that indexes into the "scope.member" partition
+        TextOffset                  trait_deprecation_texts         (DeclIndex) const;
+        std::span<AttrIndex const>  trait_declaration_attributes    (DeclIndex) const;
+        Sequence                    trait_friendship_of_class       (DeclIndex) const; // A sequence that indexes into the "scope.member" partition
+        Sequence    	            trait_template_specializations  (DeclIndex) const; // A sequence that indexes into the "scope.member" partition 
 
     public:
         using BlobView = std::span<std::byte const>;
