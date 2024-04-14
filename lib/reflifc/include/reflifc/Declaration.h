@@ -110,6 +110,14 @@ namespace reflifc
                   });
         }
 
+        ViewOf<Declaration> auto template_specializations() const
+        {
+            return ifc_->declarations().slice(ifc_->trait_template_specializations(index_))
+                | std::views::transform([ifc = ifc_](ifc::Declaration decl) {
+                return reflifc::Declaration{ ifc, decl.index };
+            });
+        }
+
         ifc::DeclSort sort() const { return index_.sort(); }
         ifc::DeclIndex index() const { return index_; }
 

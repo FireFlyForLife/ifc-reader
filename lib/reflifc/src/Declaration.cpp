@@ -74,7 +74,7 @@ namespace reflifc
 
     TemplateDeclaration Declaration::as_template() const
     {
-        return { ifc_, ifc_->template_declarations()[index_] };
+        return { ifc_, index_, ifc_->template_declarations()[index_] };
     }
 
     bool Declaration::is_specialization() const
